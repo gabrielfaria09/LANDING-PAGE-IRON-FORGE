@@ -1,0 +1,839 @@
+<!--
+  Landing Page — Academia (HTML/CSS/JS puros)
+  =============================================
+  COMO PERSONALIZAR:
+  - Textos: procure por comentários "TROCAR TEXTO" ao longo do arquivo.
+  - Imagens: substitua os arquivos em /academia/img/ ou troque os src="..." (comentários "TROCAR IMAGEM").
+  - WhatsApp: altere a constante WHATSAPP_NUMBER em script.js (formato internacional, ex: 5511999999999).
+  - Cores/tema: edite as CSS variables em styles.css (blocos :root, [data-theme="dark"], [data-theme="light"]).
+-->
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="marinho">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Academia de alta performance — musculação, cross training, aulas coletivas e muito mais. Matricule-se agora." />
+  <title>IRON FORGE — Academia de Alta Performance</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+:root,
+[data-theme="marinho"] {
+  --bg: #0A1128;
+  --bg-alt: #0D1B3E;
+  --bg-dark: #05081A;
+  --surface: #1B2A4A;
+  --text: #F5F5F5;
+  --text-muted: #B8C1D9;
+  --gold: #C9A227;
+  --gold-soft: rgba(201, 162, 39, 0.15);
+  --border: rgba(201, 162, 39, 0.2);
+  --shadow: 0 20px 60px rgba(0,0,0,0.5);
+  --glow: 0 0 30px rgba(201, 162, 39, 0.35);
+  --gradient-hero: linear-gradient(135deg, rgba(10,17,40,0.85) 0%, rgba(13,27,62,0.7) 100%);
+}
+
+[data-theme="preto"] {
+  --bg: #0A0A0A;
+  --bg-alt: #141414;
+  --bg-dark: #000000;
+  --surface: #1a1a1a;
+  --text: #F5F5F5;
+  --text-muted: #a8a8a8;
+  --gold: #D4AF37;
+  --gold-soft: rgba(212, 175, 55, 0.15);
+  --border: rgba(212, 175, 55, 0.25);
+  --shadow: 0 20px 60px rgba(0,0,0,0.7);
+  --glow: 0 0 30px rgba(212, 175, 55, 0.4);
+  --gradient-hero: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(20,20,20,0.75) 100%);
+}
+
+[data-theme="claro"] {
+  --bg: #F5F5F5;
+  --bg-alt: #ffffff;
+  --bg-dark: #e8e8e8;
+  --surface: #ffffff;
+  --text: #0A1128;
+  --text-muted: #4a5578;
+  --gold: #B8901F;
+  --gold-soft: rgba(184, 144, 31, 0.12);
+  --border: rgba(10, 17, 40, 0.1);
+  --shadow: 0 15px 40px rgba(10,17,40,0.12);
+  --glow: 0 0 25px rgba(184, 144, 31, 0.3);
+  --gradient-hero: linear-gradient(135deg, rgba(10,17,40,0.75) 0%, rgba(13,27,62,0.6) 100%);
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+.container { width: min(1200px, 92%); margin: 0 auto; }
+.gold-text { color: var(--gold); }
+.eyebrow {
+  display: inline-block; font-size: 0.85rem; font-weight: 600; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+}
+
+h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; line-height: 1.15; }
+
+.section { padding: 100px 0; }
+.section--dark { background: var(--bg-alt); }
+.section__title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 20px; }
+.section__text { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; }
+.section__header { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+  transition: all 0.3s ease; letter-spacing: 0.5px; cursor: pointer;
+  border: 2px solid transparent; white-space: nowrap;
+}
+.btn--gold {
+  background: linear-gradient(135deg, var(--gold), #e6b93a);
+  color: #0A1128; box-shadow: var(--glow);
+}
+.btn--gold:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(201,162,39,0.5); }
+.btn--ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn--ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn--sm { padding: 10px 20px; font-size: 0.85rem; }
+.btn--lg { padding: 18px 36px; font-size: 1.05rem; }
+.btn--block { width: 100%; }
+
+/* ---------- Header ---------- */
+.header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 0; background: rgba(10,17,40,0.7); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border); transition: all 0.3s ease;
+}
+[data-theme="preto"] .header { background: rgba(10,10,10,0.8); }
+[data-theme="claro"] .header { background: rgba(255,255,255,0.9); }
+.header.scrolled { padding: 12px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.header__inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+.logo { display: flex; align-items: center; gap: 10px; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.3rem; letter-spacing: 1px; }
+.logo__icon { color: var(--gold); font-size: 1.5rem; }
+.logo__accent { color: var(--gold); }
+
+.nav__list { display: flex; gap: 28px; }
+.nav__link {
+  font-size: 0.9rem; font-weight: 500; color: var(--text-muted);
+  position: relative; padding: 6px 0; transition: color 0.3s;
+}
+.nav__link::after {
+  content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 2px;
+  background: var(--gold); transition: width 0.3s ease;
+}
+.nav__link:hover { color: var(--text); }
+.nav__link:hover::after { width: 100%; }
+
+.header__actions { display: flex; align-items: center; gap: 12px; }
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid var(--border); color: var(--gold); transition: all 0.3s;
+}
+.theme-toggle:hover { background: var(--gold-soft); transform: rotate(180deg); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+.hamburger span { width: 26px; height: 2px; background: var(--text); transition: all 0.3s; border-radius: 2px; }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  overflow: hidden; padding-top: 80px;
+}
+.hero__bg {
+  position: absolute; inset: 0;
+  /* TROCAR IMAGEM: fundo do hero */
+  background: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  transform: scale(1.05);
+}
+.hero__overlay { position: absolute; inset: 0; background: var(--gradient-hero); }
+.hero__content { position: relative; z-index: 2; text-align: center; max-width: 900px; margin: 0 auto; }
+.hero__eyebrow {
+  display: inline-block; padding: 8px 20px; border: 1px solid var(--gold);
+  border-radius: 50px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px; background: rgba(201,162,39,0.08);
+}
+.hero__title { font-size: clamp(2.4rem, 6vw, 4.5rem); margin-bottom: 20px; color: #F5F5F5; }
+.hero__subtitle { font-size: clamp(1rem, 2vw, 1.25rem); color: #d4dbe8; margin-bottom: 36px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.hero__ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+.hero__stats { display: flex; gap: 60px; justify-content: center; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; align-items: center; }
+.stat__num { font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 900; }
+.stat__label { font-size: 0.85rem; color: #d4dbe8; text-transform: uppercase; letter-spacing: 1.5px; }
+
+.hero__scroll {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  color: var(--gold); font-size: 1.5rem; animation: bounce 2s infinite;
+}
+@keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-10px); } }
+
+/* ---------- Grid layouts ---------- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+
+/* Sobre */
+.values-list { margin-top: 30px; display: grid; gap: 20px; }
+.values-list li { display: flex; gap: 16px; align-items: flex-start; }
+.values-list i { color: var(--gold); font-size: 1.4rem; margin-top: 4px; }
+.values-list strong { display: block; margin-bottom: 4px; }
+.values-list p { color: var(--text-muted); font-size: 0.95rem; }
+.about__image { position: relative; }
+.about__image img { border-radius: 20px; box-shadow: var(--shadow); }
+.about__glow {
+  position: absolute; inset: -20px; border-radius: 30px; z-index: -1;
+  background: radial-gradient(circle, var(--gold-soft), transparent 70%);
+}
+
+/* Galeria */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.gallery__item { position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 4/3; cursor: pointer; }
+.gallery__item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.gallery__item:hover img { transform: scale(1.1); }
+.gallery__item figcaption {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 20px;
+  background: linear-gradient(transparent, rgba(10,17,40,0.9)); color: #F5F5F5;
+  font-weight: 600; letter-spacing: 1px;
+}
+
+/* Equipamentos */
+.grid-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.eq-card {
+  padding: 36px 28px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; text-align: center; transition: all 0.3s ease;
+}
+.eq-card:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: var(--glow); }
+.eq-card i { font-size: 2.5rem; margin-bottom: 16px; }
+.eq-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+.eq-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* Planos */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.plan {
+  padding: 40px 30px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 20px; position: relative; transition: all 0.3s ease;
+}
+.plan:hover { transform: translateY(-6px); }
+.plan--featured {
+  border-color: var(--gold); box-shadow: var(--glow); transform: scale(1.05);
+  background: linear-gradient(180deg, var(--bg), var(--surface));
+}
+.plan--featured:hover { transform: scale(1.05) translateY(-6px); }
+.plan__badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: #0A1128; padding: 6px 18px; border-radius: 50px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+}
+.plan__name { font-size: 1.4rem; margin-bottom: 20px; text-align: center; }
+.plan__price { text-align: center; margin-bottom: 30px; color: var(--text); }
+.plan__price .currency { font-size: 1rem; vertical-align: top; margin-right: 4px; color: var(--gold); }
+.plan__price .amount { font-size: 3.5rem; font-weight: 900; font-family: 'Montserrat', sans-serif; }
+.plan__price .period { font-size: 0.9rem; color: var(--text-muted); }
+.plan__features { margin-bottom: 30px; display: grid; gap: 12px; }
+.plan__features li { display: flex; gap: 10px; align-items: center; font-size: 0.95rem; }
+
+/* Modalidades */
+.modalities { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.mod {
+  padding: 30px 20px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; text-align: center; transition: all 0.3s ease;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.mod i { font-size: 2rem; color: var(--gold); transition: transform 0.3s; }
+.mod:hover { border-color: var(--gold); transform: translateY(-4px); }
+.mod:hover i { transform: scale(1.15); }
+.mod span { font-weight: 600; font-size: 0.95rem; }
+
+/* Carousel Depoimentos */
+.carousel { position: relative; max-width: 800px; margin: 0 auto; overflow: hidden; }
+.carousel__track { display: flex; transition: transform 0.5s ease; }
+.testimonial {
+  min-width: 100%; padding: 40px; text-align: center;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 20px;
+}
+.testimonial__stars { color: var(--gold); margin-bottom: 20px; font-size: 1.1rem; letter-spacing: 4px; }
+.testimonial p { font-size: 1.1rem; font-style: italic; margin-bottom: 20px; color: var(--text); }
+.testimonial footer { color: var(--text-muted); font-size: 0.9rem; }
+.testimonial footer strong { color: var(--gold); }
+.carousel__btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%; background: var(--gold);
+  color: #0A1128; display: grid; place-items: center; transition: all 0.3s;
+}
+.carousel__btn:hover { box-shadow: var(--glow); }
+.carousel__btn--prev { left: -10px; }
+.carousel__btn--next { right: -10px; }
+.carousel__dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+.carousel__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: all 0.3s; cursor: pointer; }
+.carousel__dot.active { background: var(--gold); width: 26px; border-radius: 5px; }
+
+/* Equipe */
+.team { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.team__card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; text-align: center; transition: all 0.3s;
+}
+.team__card:hover { transform: translateY(-6px); border-color: var(--gold); }
+.team__card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.team__card h3 { padding: 16px 12px 4px; font-size: 1.1rem; }
+.team__card span { display: block; padding: 0 12px 20px; color: var(--gold); font-size: 0.85rem; }
+
+/* Localização */
+.info-list { display: grid; gap: 16px; margin: 24px 0 32px; }
+.info-list li { display: flex; align-items: center; gap: 14px; font-size: 1rem; }
+.info-list i { font-size: 1.2rem; }
+.map iframe { border-radius: 20px; box-shadow: var(--shadow); }
+
+/* FAQ */
+.faq { max-width: 800px; margin: 0 auto; display: grid; gap: 14px; }
+.faq__item {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px 24px; transition: all 0.3s;
+}
+.faq__item[open] { border-color: var(--gold); }
+.faq__item summary {
+  display: flex; justify-content: space-between; align-items: center;
+  font-weight: 600; cursor: pointer; list-style: none; font-size: 1rem;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary i { color: var(--gold); transition: transform 0.3s; }
+.faq__item[open] summary i { transform: rotate(45deg); }
+.faq__item p { margin-top: 14px; color: var(--text-muted); font-size: 0.95rem; }
+
+/* CTA final */
+.cta-final {
+  padding: 100px 0; text-align: center;
+  background: linear-gradient(135deg, var(--bg-alt), var(--bg));
+  position: relative; overflow: hidden;
+}
+.cta-final::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, var(--gold-soft), transparent 60%);
+}
+.cta-final > .container { position: relative; }
+.cta-final h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 16px; }
+.cta-final p { color: var(--text-muted); margin-bottom: 32px; font-size: 1.1rem; }
+
+/* Footer */
+.footer { background: var(--bg-dark); padding: 60px 0 20px; border-top: 1px solid var(--border); }
+.footer__inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer__tag { color: var(--text-muted); margin: 16px 0 20px; font-size: 0.95rem; }
+.socials { display: flex; gap: 12px; }
+.socials a {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid var(--border); color: var(--gold); transition: all 0.3s;
+}
+.socials a:hover { background: var(--gold); color: #0A1128; transform: translateY(-3px); }
+.footer h4 { color: var(--gold); margin-bottom: 16px; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
+.footer ul li { margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem; }
+.footer ul li a:hover { color: var(--gold); }
+.footer__bottom {
+  text-align: center; padding-top: 20px; border-top: 1px solid var(--border);
+  color: var(--text-muted); font-size: 0.85rem;
+}
+
+/* WhatsApp Float */
+.wa-float {
+  position: fixed; bottom: 24px; right: 24px; z-index: 99;
+  width: 60px; height: 60px; border-radius: 50%; background: #25D366;
+  color: #fff; display: grid; place-items: center; font-size: 1.8rem;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+  animation: pulse 2.5s infinite; transition: transform 0.3s;
+}
+.wa-float:hover { transform: scale(1.1); }
+@keyframes pulse {
+  0%,100% { box-shadow: 0 8px 30px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.5); }
+  50% { box-shadow: 0 8px 30px rgba(37,211,102,0.5), 0 0 0 15px rgba(37,211,102,0); }
+}
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 968px) {
+  .grid-2 { grid-template-columns: 1fr; gap: 40px; }
+  .gallery, .grid-cards, .plans, .team { grid-template-columns: repeat(2, 1fr); }
+  .plan--featured { transform: none; }
+  .plan--featured:hover { transform: translateY(-6px); }
+  .modalities { grid-template-columns: repeat(3, 1fr); }
+  .footer__inner { grid-template-columns: 1fr 1fr; }
+
+  .hamburger { display: flex; }
+  .nav {
+    position: fixed; top: 0; right: -100%; width: 80%; max-width: 320px; height: 100vh;
+    background: var(--bg-alt); padding: 100px 30px 30px; transition: right 0.4s ease;
+    border-left: 1px solid var(--border); box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+  }
+  .nav.active { right: 0; }
+  .nav__list { flex-direction: column; gap: 20px; }
+  .nav__link { font-size: 1.1rem; }
+  .header__actions .btn { display: none; }
+}
+
+@media (max-width: 560px) {
+  .section { padding: 70px 0; }
+  .gallery, .grid-cards, .plans, .team, .modalities, .footer__inner { grid-template-columns: 1fr; }
+  .hero__stats { gap: 30px; }
+  .stat__num { font-size: 1.6rem; }
+  .carousel__btn--prev { left: 5px; }
+  .carousel__btn--next { right: 5px; }
+  .testimonial { padding: 30px 20px; }
+  .wa-float { width: 54px; height: 54px; font-size: 1.5rem; bottom: 18px; right: 18px; }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- =================== HEADER =================== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#hero" class="logo" aria-label="IRON FORGE">
+        <i class="fa-solid fa-dumbbell logo__icon"></i>
+        <!-- TROCAR TEXTO: nome da academia -->
+        <span class="logo__text">IRON<span class="logo__accent">FORGE</span></span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="#sobre" class="nav__link">Sobre</a></li>
+          <li><a href="#infra" class="nav__link">Infraestrutura</a></li>
+          <li><a href="#equipamentos" class="nav__link">Equipamentos</a></li>
+          <li><a href="#planos" class="nav__link">Planos</a></li>
+          <li><a href="#modalidades" class="nav__link">Aulas</a></li>
+          <li><a href="#equipe" class="nav__link">Equipe</a></li>
+          <li><a href="#localizacao" class="nav__link">Localização</a></li>
+          <li><a href="#faq" class="nav__link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">
+          <i class="fa-solid fa-circle-half-stroke"></i>
+        </button>
+        <a href="#cta" class="btn btn--gold btn--sm cta-whatsapp" data-wa-msg="Olá! Quero me matricular na IRON FORGE.">
+          <i class="fa-brands fa-whatsapp"></i> Matricule-se
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================== HERO =================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="container hero__content reveal">
+      <span class="hero__eyebrow">Alta performance · Resultados reais</span>
+      <!-- TROCAR TEXTO: headline principal -->
+      <h1 class="hero__title">
+        Forje a versão mais <span class="gold-text">forte</span> de você.
+      </h1>
+      <p class="hero__subtitle">
+        Estrutura completa, tecnologia de ponta e uma equipe pronta pra transformar seu treino em conquista.
+      </p>
+      <div class="hero__ctas">
+        <a href="#" class="btn btn--gold btn--lg cta-whatsapp" data-wa-msg="Olá! Quero conhecer os planos da IRON FORGE.">
+          <i class="fa-brands fa-whatsapp"></i> Matricule-se agora
+        </a>
+        <a href="#planos" class="btn btn--ghost btn--lg">Ver planos</a>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__num gold-text">+2.500</span><span class="stat__label">alunos ativos</span></div>
+        <div class="stat"><span class="stat__num gold-text">+50</span><span class="stat__label">aulas semanais</span></div>
+        <div class="stat"><span class="stat__num gold-text">24/7</span><span class="stat__label">acesso liberado</span></div>
+      </div>
+    </div>
+    <a href="#sobre" class="hero__scroll" aria-label="Rolar para baixo"><i class="fa-solid fa-chevron-down"></i></a>
+  </section>
+
+  <!-- =================== SOBRE =================== -->
+  <section class="section" id="sobre">
+    <div class="container grid-2">
+      <div class="reveal">
+        <span class="eyebrow">Sobre a academia</span>
+        <h2 class="section__title">Mais que treino. Um estilo de vida.</h2>
+        <p class="section__text">
+          <!-- TROCAR TEXTO: descrição da academia -->
+          Há mais de 10 anos formando atletas, entusiastas e histórias de superação. Unimos ciência, tecnologia e um ambiente premium para você atingir seu próximo nível.
+        </p>
+        <ul class="values-list">
+          <li><i class="fa-solid fa-bullseye"></i><div><strong>Missão</strong><p>Transformar vidas através do movimento.</p></div></li>
+          <li><i class="fa-solid fa-eye"></i><div><strong>Visão</strong><p>Ser referência em performance e bem-estar.</p></div></li>
+          <li><i class="fa-solid fa-hand-fist"></i><div><strong>Valores</strong><p>Disciplina, respeito, evolução constante.</p></div></li>
+        </ul>
+      </div>
+      <div class="about__image reveal">
+        <!-- TROCAR IMAGEM: foto da academia -->
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80" alt="Interior da academia" loading="lazy" />
+        <div class="about__glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== INFRAESTRUTURA =================== -->
+  <section class="section section--dark" id="infra">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="eyebrow">Infraestrutura</span>
+        <h2 class="section__title">Ambientes pensados pra sua evolução</h2>
+      </div>
+      <div class="gallery">
+        <!-- TROCAR IMAGEM: ambientes da academia -->
+        <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80" alt="Musculação" loading="lazy"><figcaption>Musculação</figcaption></figure>
+        <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=800&q=80" alt="Cardio" loading="lazy"><figcaption>Cardio</figcaption></figure>
+        <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=800&q=80" alt="Cross Training" loading="lazy"><figcaption>Cross Training</figcaption></figure>
+        <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1600965962361-9035dbfd1c50?auto=format&fit=crop&w=800&q=80" alt="Piscina" loading="lazy"><figcaption>Piscina</figcaption></figure>
+        <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80" alt="Estúdio de Aulas" loading="lazy"><figcaption>Aulas Coletivas</figcaption></figure>
+        <figure class="gallery__item reveal"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRikJ1SQ4QZPcJpYk97GnWbmHvJreYCdwOPkmXXryKoaQ&s=10" alt="Vestiários" loading="lazy"><figcaption>Vestiários</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== EQUIPAMENTOS =================== -->
+  <section class="section" id="equipamentos">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="eyebrow">Equipamentos</span>
+        <h2 class="section__title">Tecnologia de ponta ao seu alcance</h2>
+      </div>
+      <div class="grid-cards">
+        <div class="eq-card reveal"><i class="fa-solid fa-person-running gold-text"></i><h3>Esteiras Premium</h3><p>Motorizadas, com inclinação e monitor cardíaco.</p></div>
+        <div class="eq-card reveal"><i class="fa-solid fa-dumbbell gold-text"></i><h3>Área Livre</h3><p>Halteres de 1 a 50kg, anilhas e barras olímpicas.</p></div>
+        <div class="eq-card reveal"><i class="fa-solid fa-gears gold-text"></i><h3>Máquinas Guiadas</h3><p>Linha completa Life Fitness e Technogym.</p></div>
+        <div class="eq-card reveal"><i class="fa-solid fa-bicycle gold-text"></i><h3>Bikes Indoor</h3><p>Spinning com telemetria em tempo real.</p></div>
+        <div class="eq-card reveal"><i class="fa-solid fa-weight-hanging gold-text"></i><h3>Cross Rig</h3><p>Estrutura completa para treino funcional.</p></div>
+        <div class="eq-card reveal"><i class="fa-solid fa-heart-pulse gold-text"></i><h3>Cardio Avançado</h3><p>Ellípticos, escadas e remos ergométricos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PLANOS =================== -->
+  <section class="section section--dark" id="planos">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="eyebrow">Planos</span>
+        <h2 class="section__title">Escolha o plano ideal pra você</h2>
+      </div>
+      <div class="plans">
+        <div class="plan reveal">
+          <h3 class="plan__name">Mensal</h3>
+          <div class="plan__price"><span class="currency">R$</span><span class="amount">149</span><span class="period">/mês</span></div>
+          <ul class="plan__features">
+            <li><i class="fa-solid fa-check gold-text"></i> Acesso total à musculação</li>
+            <li><i class="fa-solid fa-check gold-text"></i> Aulas coletivas</li>
+            <li><i class="fa-solid fa-check gold-text"></i> Avaliação física</li>
+          </ul>
+          <a href="#" class="btn btn--ghost btn--block cta-whatsapp" data-wa-msg="Olá! Quero o plano MENSAL.">Assinar</a>
+        </div>
+
+        <div class="plan plan--featured reveal">
+          <span class="plan__badge">Mais vantajoso</span>
+          <h3 class="plan__name">Trimestral</h3>
+          <div class="plan__price"><span class="currency">R$</span><span class="amount">119</span><span class="period">/mês</span></div>
+          <ul class="plan__features">
+            <li><i class="fa-solid fa-check gold-text"></i> Tudo do mensal</li>
+            <li><i class="fa-solid fa-check gold-text"></i> Acesso 24h</li>
+            <li><i class="fa-solid fa-check gold-text"></i> Personal 1x/mês</li>
+            <li><i class="fa-solid fa-check gold-text"></i> Kit boas-vindas</li>
+          </ul>
+          <a href="#" class="btn btn--gold btn--block cta-whatsapp" data-wa-msg="Olá! Quero o plano TRIMESTRAL.">Assinar</a>
+        </div>
+
+        <div class="plan reveal">
+          <h3 class="plan__name">Anual</h3>
+          <div class="plan__price"><span class="currency">R$</span><span class="amount">99</span><span class="period">/mês</span></div>
+          <ul class="plan__features">
+            <li><i class="fa-solid fa-check gold-text"></i> Tudo do trimestral</li>
+            <li><i class="fa-solid fa-check gold-text"></i> Acompanhamento nutri</li>
+            <li><i class="fa-solid fa-check gold-text"></i> Convidado 2x/mês</li>
+          </ul>
+          <a href="#" class="btn btn--ghost btn--block cta-whatsapp" data-wa-msg="Olá! Quero o plano ANUAL.">Assinar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== MODALIDADES =================== -->
+  <section class="section" id="modalidades">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="eyebrow">Modalidades</span>
+        <h2 class="section__title">Aulas para todos os objetivos</h2>
+      </div>
+      <div class="modalities">
+        <div class="mod reveal"><i class="fa-solid fa-dumbbell"></i><span>Musculação</span></div>
+        <div class="mod reveal"><i class="fa-solid fa-fire"></i><span>Funcional</span></div>
+        <div class="mod reveal"><i class="fa-solid fa-bicycle"></i><span>Spinning</span></div>
+        <div class="mod reveal"><i class="fa-solid fa-spa"></i><span>Yoga</span></div>
+        <div class="mod reveal"><i class="fa-solid fa-person-swimming"></i><span>Natação</span></div>
+        <div class="mod reveal"><i class="fa-solid fa-hand-fist"></i><span>Boxe</span></div>
+        <div class="mod reveal"><i class="fa-solid fa-music"></i><span>Zumba</span></div>
+        <div class="mod reveal"><i class="fa-solid fa-person-running"></i><span>Corrida</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== DEPOIMENTOS =================== -->
+  <section class="section section--dark" id="depoimentos">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="eyebrow">Depoimentos</span>
+        <h2 class="section__title">Histórias que inspiram</h2>
+      </div>
+
+      <div class="carousel" id="carousel">
+        <div class="carousel__track" id="carouselTrack">
+          <article class="testimonial">
+            <div class="testimonial__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p>"Ambiente incrível, professores atenciosos e resultados que apareceram em pouco tempo. Recomendo demais!"</p>
+            <footer><strong>Marina S.</strong> · Aluna há 2 anos</footer>
+          </article>
+          <article class="testimonial">
+            <div class="testimonial__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p>"Melhor estrutura da cidade. Equipamentos novos e sempre bem cuidados. Virou minha segunda casa."</p>
+            <footer><strong>Rafael M.</strong> · Aluno há 1 ano</footer>
+          </article>
+          <article class="testimonial">
+            <div class="testimonial__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p>"Perdi 18kg em 8 meses com acompanhamento profissional. Mudou minha vida por completo."</p>
+            <footer><strong>Camila R.</strong> · Aluna há 3 anos</footer>
+          </article>
+        </div>
+        <button class="carousel__btn carousel__btn--prev" id="prevBtn" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel__btn carousel__btn--next" id="nextBtn" aria-label="Próximo"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="carousel__dots" id="carouselDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== EQUIPE =================== -->
+  <section class="section" id="equipe">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="eyebrow">Nossa Equipe</span>
+        <h2 class="section__title">Profissionais que fazem a diferença</h2>
+      </div>
+      <div class="team">
+        <!-- TROCAR IMAGEM/TEXTO: fotos e nomes dos professores -->
+        <div class="team__card reveal">
+          <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=500&q=80" alt="Prof. Lucas" loading="lazy">
+          <h3>Lucas Andrade</h3><span>Musculação · Hipertrofia</span>
+        </div>
+        <div class="team__card reveal">
+          <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=500&q=80" alt="Prof. Beatriz" loading="lazy">
+          <h3>Beatriz Lima</h3><span>Funcional · Cross</span>
+        </div>
+        <div class="team__card reveal">
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=500&q=80" alt="Prof. Diego" loading="lazy">
+          <h3>Diego Santos</h3><span>Boxe · Muay Thai</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== LOCALIZAÇÃO =================== -->
+  <section class="section section--dark" id="localizacao">
+    <div class="container grid-2">
+      <div class="reveal">
+        <span class="eyebrow">Localização</span>
+        <h2 class="section__title">Venha nos visitar</h2>
+        <ul class="info-list">
+          <!-- TROCAR TEXTO: endereço, horários e contatos -->
+          <li><i class="fa-solid fa-location-dot gold-text"></i> Av. Paulista, 1000 — São Paulo/SP</li>
+          <li><i class="fa-solid fa-clock gold-text"></i> Seg–Sex: 05h às 23h · Sáb: 07h às 20h · Dom: 08h às 14h</li>
+          <li><i class="fa-solid fa-phone gold-text"></i> (11) 99999-9999</li>
+          <li><i class="fa-solid fa-envelope gold-text"></i> contato@ironforge.com.br</li>
+        </ul>
+        <a href="#" class="btn btn--gold cta-whatsapp" data-wa-msg="Olá! Quero agendar uma visita à IRON FORGE.">
+          <i class="fa-brands fa-whatsapp"></i> Agendar visita
+        </a>
+      </div>
+      <div class="map reveal">
+        <!-- TROCAR: URL do embed do Google Maps -->
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.191663135095!2d-46.6565!3d-23.5613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMzJzQwLjciUyA0NsKwMzknMjMuNCJX!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+          width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FAQ =================== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="eyebrow">Dúvidas frequentes</span>
+        <h2 class="section__title">FAQ</h2>
+      </div>
+      <div class="faq">
+        <details class="faq__item reveal"><summary>Preciso de agendamento para começar?<i class="fa-solid fa-plus"></i></summary><p>Não! É só chegar. Se preferir, agende uma aula experimental pelo WhatsApp.</p></details>
+        <details class="faq__item reveal"><summary>Posso cancelar a qualquer momento?<i class="fa-solid fa-plus"></i></summary><p>Sim, o plano mensal não tem fidelidade. Trimestral e anual seguem as regras do contrato.</p></details>
+        <details class="faq__item reveal"><summary>Tem estacionamento?<i class="fa-solid fa-plus"></i></summary><p>Sim, oferecemos estacionamento coberto e gratuito para alunos.</p></details>
+        <details class="faq__item reveal"><summary>Vocês fazem avaliação física?<i class="fa-solid fa-plus"></i></summary><p>Sim, inclusa em todos os planos, com reavaliações trimestrais.</p></details>
+        <details class="faq__item reveal"><summary>Menores de idade podem treinar?<i class="fa-solid fa-plus"></i></summary><p>Sim, a partir de 14 anos com autorização dos responsáveis.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CTA FINAL =================== -->
+  <section class="cta-final" id="cta">
+    <div class="container reveal">
+      <h2>Pronto pra começar sua transformação?</h2>
+      <p>Dê o primeiro passo hoje. Sua melhor versão te espera.</p>
+      <a href="https://wa.me/5519988570715?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="btn btn--gold btn--lg cta-whatsapp" data-wa-msg="Olá! Quero começar meu treino na IRON FORGE.">
+        <i class="fa-brands fa-whatsapp"></i> Fale conosco agora
+      </a>
+    </div>
+  </section>
+
+  <!-- =================== FOOTER =================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <div class="logo"><i class="fa-solid fa-dumbbell logo__icon"></i><span class="logo__text">IRON<span class="logo__accent">FORGE</span></span></div>
+        <p class="footer__tag">Forjando resultados desde 2014.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul><li><a href="#sobre">Sobre</a></li><li><a href="#planos">Planos</a></li><li><a href="#modalidades">Aulas</a></li><li><a href="#faq">FAQ</a></li></ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul><li>Av. Paulista, 1000</li><li>(19) 98857-0715</li><li>contato@ironforge.com.br</li></ul>
+      </div>
+    </div>
+    <div class="footer__bottom">© <span id="year"></span> IRON FORGE — Todos os direitos reservados.</div>
+  </footer>
+
+  <!-- Botão flutuante WhatsApp -->
+  <a href="https://wa.me/5519988570715?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="wa-float cta-whatsapp" data-wa-msg="Olá! Quero saber mais sobre a IRON FORGE." aria-label="Fale no WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <script>
+/* =============================================
+   IRON FORGE — Scripts
+   ============================================= */
+
+// ⚙️ TROCAR: número do WhatsApp (formato internacional, só dígitos)
+const WHATSAPP_NUMBER = "5511999999999";
+
+/* ---- WhatsApp CTAs ---- */
+document.querySelectorAll('.cta-whatsapp').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    const msg = encodeURIComponent(el.dataset.waMsg || 'Olá! Quero saber mais.');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+  });
+});
+
+/* ---- Header scroll ---- */
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ---- Menu mobile ---- */
+const hamburger = document.getElementById('hamburger');
+const nav = document.getElementById('nav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  nav.classList.toggle('active');
+});
+document.querySelectorAll('.nav__link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    nav.classList.remove('active');
+  });
+});
+
+/* ---- Theme Toggle (cicla entre 3 temas) ---- */
+const themes = ['marinho', 'preto', 'claro'];
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('ironforge-theme') || 'marinho';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = themes[(themes.indexOf(current) + 1) % themes.length];
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('ironforge-theme', next);
+});
+
+/* ---- Reveal on scroll ---- */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ---- Carousel Depoimentos ---- */
+const track = document.getElementById('carouselTrack');
+const slides = track.children;
+const dotsWrap = document.getElementById('carouselDots');
+let idx = 0;
+
+for (let i = 0; i < slides.length; i++) {
+  const dot = document.createElement('button');
+  dot.className = 'carousel__dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', `Depoimento ${i+1}`);
+  dot.addEventListener('click', () => goTo(i));
+  dotsWrap.appendChild(dot);
+}
+
+function goTo(i) {
+  idx = (i + slides.length) % slides.length;
+  track.style.transform = `translateX(-${idx * 100}%)`;
+  dotsWrap.querySelectorAll('.carousel__dot').forEach((d, di) => d.classList.toggle('active', di === idx));
+}
+document.getElementById('prevBtn').addEventListener('click', () => goTo(idx - 1));
+document.getElementById('nextBtn').addEventListener('click', () => goTo(idx + 1));
+setInterval(() => goTo(idx + 1), 6000);
+
+/* ---- Ano no footer ---- */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---- Parallax leve no hero ---- */
+const heroBg = document.querySelector('.hero__bg');
+if (heroBg) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < window.innerHeight) heroBg.style.transform = `translateY(${y * 0.3}px) scale(1.05)`;
+  });
+}
+
+</script>
+</body>
+</html>
